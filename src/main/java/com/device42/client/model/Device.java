@@ -1,19 +1,18 @@
 package com.device42.client.model;
 
 public class Device {
-    private final long id;
-    private final String name;
-    private final String hardwareModel;
-    private final String serialNo;
-    private final String assetNo;
+    private long id;
+    private String name;
+    private String hardwareModel;
+    private String serialNo;
+    private String assetNo;
+    private String serviceLevel;
+    private String type;
+    private String virtualHostName;
+    private String manufacturer;
+    private String uuid;
 
-    public Device(long id, String name, String hardwareModel, String serialNo, String assetNo) {
-        this.id = id;
-        this.name = name;
-        this.hardwareModel = hardwareModel;
-        this.serialNo = serialNo;
-        this.assetNo = assetNo;
-    }
+    public Device() {}
 
     public String getAssetNo() {
         return assetNo;
@@ -27,6 +26,10 @@ public class Device {
         return id;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
     public String getName() {
         return name;
     }
@@ -35,10 +38,68 @@ public class Device {
         return serialNo;
     }
 
+    public String getServiceLevel() {
+        return serviceLevel;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public String getVirtualHostName() {
+        return virtualHostName;
+    }
+
+    public void setAssetNo(String assetNo) {
+        this.assetNo = assetNo;
+    }
+
+    public void setHardwareModel(String hardwareModel) {
+        this.hardwareModel = hardwareModel;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSerialNo(String serialNo) {
+        this.serialNo = serialNo;
+    }
+
+    public void setServiceLevel(String serviceLevel) {
+        this.serviceLevel = serviceLevel;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setVirtualHostName(String virtualHostName) {
+        this.virtualHostName = virtualHostName;
+    }
+
     @Override
     public String toString() {
         return "Device [id=" + id + ", name=" + name + ", hardwareModel="
                 + hardwareModel + ", serialNo=" + serialNo + ", assetNo="
-                + assetNo + "]";
+                + assetNo + ", serviceLevel=" + serviceLevel + ", type=" + type
+                + ", virtualHostName=" + virtualHostName + ", manufacturer="
+                + manufacturer + ", uuid=" + uuid + "]";
     }
 }
