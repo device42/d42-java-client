@@ -11,6 +11,7 @@ public class Device {
     private String virtualHostName;
     private String manufacturer;
     private String uuid;
+    private String rack;
 
     public Device() {}
 
@@ -18,11 +19,11 @@ public class Device {
         return assetNo;
     }
 
-    public String getHardwareModel() {
+	public String getHardwareModel() {
         return hardwareModel;
     }
 
-    public long getId() {
+	public long getId() {
         return id;
     }
 
@@ -33,6 +34,10 @@ public class Device {
     public String getName() {
         return name;
     }
+
+    public String getRack() {
+		return rack;
+	}
 
     public String getSerialNo() {
         return serialNo;
@@ -74,6 +79,10 @@ public class Device {
         this.name = name;
     }
 
+    public void setRack(String rack) {
+		this.rack = rack;
+	}
+
     public void setSerialNo(String serialNo) {
         this.serialNo = serialNo;
     }
@@ -96,10 +105,8 @@ public class Device {
 
     @Override
     public String toString() {
-        return "Device [id=" + id + ", name=" + name + ", hardwareModel="
-                + hardwareModel + ", serialNo=" + serialNo + ", assetNo="
-                + assetNo + ", serviceLevel=" + serviceLevel + ", type=" + type
-                + ", virtualHostName=" + virtualHostName + ", manufacturer="
-                + manufacturer + ", uuid=" + uuid + "]";
+        return "Device [id=" + id + ", name=" + name + ", hardwareModel=" + hardwareModel + ", serialNo=" + serialNo
+                + ", assetNo=" + assetNo + ", serviceLevel=" + serviceLevel + ", type=" + type + ", virtualHostName="
+                + virtualHostName + ", manufacturer=" + manufacturer + ", uuid=" + uuid + ", rack=" + rack + "]";
     }
 }

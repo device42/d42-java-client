@@ -1,12 +1,12 @@
 package com.device42.client.services;
 
-import com.device42.client.model.Room;
-import com.device42.client.parser.BasicRoomsJsonParser;
+import java.util.List;
+
 import org.apache.http.impl.client.CloseableHttpClient;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.device42.client.model.Room;
+import com.device42.client.parser.BasicRoomsJsonParser;
+import com.device42.client.services.parameters.RoomParameters;
 
 public class RoomsRestClient extends AbstractAsynchronousRestClient {
     private BasicRoomsJsonParser roomsJsonParser = new BasicRoomsJsonParser();
@@ -15,13 +15,7 @@ public class RoomsRestClient extends AbstractAsynchronousRestClient {
         super(baseUrl, httpClient);
     }
 
-    public List<Room> getRooms() {
-        return get("/api/1.0/rooms/", roomsJsonParser);
-    }
-
-    public List<Room> getRoomsByBuildingId(long buildingId) {
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("building_id", Long.toString(buildingId));
-        return get("/api/1.0/rooms/", roomsJsonParser, parameters);
+    public List<Room> getRoomsByBuildingId(RoomParameters roomParameters) {
+        return get("/api/1.0/rooms/", roomsJsonParser, roomParameters);
     }
 }

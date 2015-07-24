@@ -2,13 +2,8 @@ package com.device42.client.services;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Map;
 
-import com.device42.client.parser.BasicErrorJsonParser;
-import com.device42.client.parser.JsonObjectParser;
-import com.device42.client.parser.JsonParser;
-import com.device42.client.util.Device42ClientException;
 import org.apache.http.HttpHost;
 import org.apache.http.StatusLine;
 import org.apache.http.client.AuthCache;
@@ -22,6 +17,13 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+
+import com.device42.client.parser.BasicErrorJsonParser;
+import com.device42.client.parser.JsonObjectParser;
+import com.device42.client.parser.JsonParser;
+import com.device42.client.services.parameters.EmptyInputParameters;
+import com.device42.client.services.parameters.InputParameters;
+import com.device42.client.util.Device42ClientException;
 
 abstract class AbstractAsynchronousRestClient implements Closeable {
     private static Logger logger = Logger.getLogger(AbstractAsynchronousRestClient.class);
@@ -50,13 +52,13 @@ abstract class AbstractAsynchronousRestClient implements Closeable {
     }
 
     protected <T> T get(String path, JsonParser<?, T> parser) {
-        return get(path, parser, Collections.<String, String>emptyMap());
+        return get(path, parser, new EmptyInputParameters());
     }
 
     @SuppressWarnings("unchecked")
-    protected <T> T get(String path, JsonParser<?, T> parser, Map<String, String> parameters) {
+    protected <T> T get(String path, JsonParser<?, T> parser, InputParameters inputParameters) {
         RequestBuilder requestBuilder = RequestBuilder.get().setUri(path);
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+        for (Map.Entry<String, String> entry : inputParameters.parametersMap().entrySet()) {
             requestBuilder.addParameter(entry.getKey(), entry.getValue());
         }
         try {

@@ -19,6 +19,7 @@ public class BasicDeviceJsonParser implements JsonObjectParser<Device> {
         device.setVirtualHostName(json.has("virtual_host_name") ? json.getString("virtual_host_name") : "");
         device.setManufacturer(json.has("manufacturer") ? json.getString("manufacturer") : "");
         device.setUuid(json.has("uuid") ? json.getString("uuid") : "");
+        device.setRack(json.has("rack") ? json.getString("rack") : "");
         return device;
     }
 }
