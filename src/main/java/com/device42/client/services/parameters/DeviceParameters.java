@@ -17,15 +17,13 @@ public class DeviceParameters implements InputParameters {
         };
 
         private List<String> columns;
-        private String type;
-        private String serviceLevel;
-        private long roomId;
-        private long rackId;
+        private Map<String, String> parameters;
         private long limit;
         private long offset;
 
         public DeviceParametersBuilder() {
             this.columns = Arrays.asList(DEFAULT_COLUMNS);
+            this.parameters = new HashMap<>();
         }
 
         public DeviceParametersBuilder(List<String> columns) {
@@ -36,7 +34,7 @@ public class DeviceParameters implements InputParameters {
         }
 
         public DeviceParameters build() {
-            return new DeviceParameters(columns, type, serviceLevel, roomId, rackId, limit, offset);
+            return new DeviceParameters(columns, parameters, limit, offset);
         }
 
         public DeviceParametersBuilder limit(long limit) {
@@ -49,73 +47,40 @@ public class DeviceParameters implements InputParameters {
             return this;
         }
 
-        public DeviceParametersBuilder rackId(long rackId) {
-            this.rackId = rackId;
-            return this;
-        }
-
-        public DeviceParametersBuilder roomId(long roomId) {
-            this.roomId = roomId;
-            return this;
-        }
-
-        public DeviceParametersBuilder serviceLevel(String serviceLevel) {
-            this.serviceLevel = serviceLevel;
-            return this;
-        }
-
-        public DeviceParametersBuilder type(String type) {
-            this.type = type;
+        public DeviceParametersBuilder parameter(String parameter, String value) {
+            this.parameters.put(parameter, value);
             return this;
         }
     }
 
     private List<String> columns;
-    private String type;
-    private String serviceLevel;
-    private long roomId;
-    private long rackId;
+    private Map<String, String> parameters;
     private long limit;
     private long offset;
 
     private DeviceParameters(
             List<String> columns,
-            String type,
-            String serviceLevel,
-            long roomId,
-            long rackId,
+            Map<String, String> parameters,
             long limit,
             long offset) {
         this.columns = columns;
-        this.type = type;
-        this.serviceLevel = serviceLevel;
-        this.roomId = roomId;
-        this.rackId = rackId;
+        this.parameters = parameters;
         this.limit = limit;
         this.offset = offset;
     }
 
     @Override
     public Map<String, String> parametersMap() {
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("include_cols", StringUtils.join(columns, ","));
-        if (StringUtils.isNotBlank(serviceLevel)) {
-            parameters.put("service_level", serviceLevel);
-        }
-        if (StringUtils.isNotBlank(type)) {
-            parameters.put("type", type);
-        }
-        if (roomId > 0) {
-            parameters.put("room_id", Long.toString(roomId));
-        }
-        if (rackId > 0) {
-            parameters.put("rack_id", Long.toString(rackId));
+        Map<String, String> parametersMap = new HashMap<>();
+        parametersMap.put("include_cols", StringUtils.join(columns, ","));
+        for (Map.Entry<String, String> parameterEntry : parameters.entrySet()) {
+            parametersMap.put(parameterEntry.getKey(), parameterEntry.getValue());
         }
         if (limit > 0) {
-            parameters.put("limit", Long.toString(limit));
+            parametersMap.put("limit", Long.toString(limit));
         }
         if (offset > 0) {
-            parameters.put("offset", Long.toString(offset));
+            parametersMap.put("offset", Long.toString(offset));
         }
         return parameters;
     }
