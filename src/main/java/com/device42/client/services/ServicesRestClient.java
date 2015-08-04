@@ -15,7 +15,7 @@ public class ServicesRestClient extends AbstractAsynchronousRestClient {
         super(baseUrl, httpClient);
     }
 
-    public List<Service> getServicesById(ServiceParameters serviceParameters) {
+    public List<Service> getServices(ServiceParameters serviceParameters) {
         return get("/api/1.0/services/", servicesJsonParser, serviceParameters);
     }
 }
