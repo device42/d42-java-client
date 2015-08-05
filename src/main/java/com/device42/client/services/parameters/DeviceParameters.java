@@ -31,6 +31,7 @@ public class DeviceParameters implements InputParameters {
                 throw new Device42ClientException("List device's columns must not be null or empty.");
             }
             this.columns = columns;
+            this.parameters = new HashMap<>();
         }
 
         public DeviceParameters build() {
