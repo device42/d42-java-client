@@ -83,6 +83,6 @@ public class DeviceParameters implements InputParameters {
         if (offset > 0) {
             parametersMap.put("offset", Long.toString(offset));
         }
-        return parameters;
+        return parametersMap;
     }
 }
