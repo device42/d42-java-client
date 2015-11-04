@@ -28,7 +28,9 @@ public class RoomParameters implements InputParameters {
     @Override
     public Map<String, String> parametersMap() {
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("building_id", Long.toString(buildingId));
+        if (buildingId > 0) {
+            parameters.put("building_id", Long.toString(buildingId));
+        }
         return parameters;
     }
 }

@@ -1,6 +1,16 @@
 package com.device42.client.services;
 
-import com.device42.client.util.Device42ClientException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
 import org.apache.http.auth.AuthScope;
@@ -16,15 +26,7 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.TrustStrategy;
 import org.apache.log4j.Logger;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.Arrays;
-import java.util.List;
+import com.device42.client.util.Device42ClientException;
 
 public class Device42ClientFactory {
     private static Logger logger = Logger.getLogger(Device42ClientFactory.class);
@@ -54,6 +56,14 @@ public class Device42ClientFactory {
             .setDefaultCredentialsProvider(credentialsProvider)
             .setDefaultHeaders(headers)
             .build();
+    }
+
+    public static PartsRestClient createPartsClient(String baseUrl, String username, String password) {
+        return new PartsRestClient(baseUrl, createHttpClient(username, password));
+    }
+
+    public static PDUsRestClient createPDUsClient(String baseUrl, String username, String password) {
+        return new PDUsRestClient(baseUrl, createHttpClient(username, password));
     }
 
     public static RacksRestClient createRackClient(String baseUrl, String username, String password) {

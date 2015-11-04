@@ -15,7 +15,7 @@ public class RoomsRestClient extends AbstractAsynchronousRestClient {
         super(baseUrl, httpClient);
     }
 
-    public List<Room> getRoomsByBuildingId(RoomParameters roomParameters) {
+    public List<Room> getRooms(RoomParameters roomParameters) {
         return get("/api/1.0/rooms/", roomsJsonParser, roomParameters);
     }
 }
