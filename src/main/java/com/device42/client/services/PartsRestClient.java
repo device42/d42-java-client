@@ -15,6 +15,10 @@ public class PartsRestClient extends AbstractAsynchronousRestClient {
         super(baseUrl, httpClient);
     }
 
+    public List<Part> getParts() {
+        return getParts(new PartParameters.PartParametersBuilder().build());
+    }
+
     public List<Part> getParts(PartParameters partParameters) {
         return get("/api/1.0/parts/", partsJsonParser, partParameters);
     }

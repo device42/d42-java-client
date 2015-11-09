@@ -13,6 +13,8 @@ public class BasicPartJsonParser implements JsonObjectParser<Part> {
         final String assignment = json.getString("assignment");
         final String serialNo = json.getString("serial_no");
         final int count = json.getInt("count");
-        return new Part(id, description, assignment, serialNo, count);
+        JSONObject partModel = json.getJSONObject("partmodel");
+        final String modelName = (partModel != null) ? partModel.getString("name") : "";
+        return new Part(id, modelName, description, assignment, serialNo, count);
     }
 }
