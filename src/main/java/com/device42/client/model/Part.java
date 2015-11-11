@@ -3,6 +3,7 @@ package com.device42.client.model;
 public class Part {
     private final long id;
     private final String modelName;
+    private final String modelType;
     private final String description;
     private final String assignment;
     private final String serialNo;
@@ -11,12 +12,14 @@ public class Part {
     public Part(
             long id,
             String modelName,
+            String modelType,
             String description,
             String assignment,
             String serialNo,
             int count) {
         this.id = id;
         this.modelName = modelName;
+        this.modelType = modelType;
         this.description = description;
         this.assignment = assignment;
         this.serialNo = serialNo;
@@ -43,13 +46,17 @@ public class Part {
         return modelName;
     }
 
+    public String getModelType() {
+        return modelType;
+    }
+
     public String getSerialNo() {
         return serialNo;
     }
 
     @Override
     public String toString() {
-        return "Part [id=" + id + ", modelName=" + modelName + ", description=" + description + ", assignment="
-                + assignment + ", serialNo=" + serialNo + ", count=" + count + "]";
+        return "Part [id=" + id + ", modelName=" + modelName + ", modelType=" + modelType + ", description="
+                + description + ", assignment=" + assignment + ", serialNo=" + serialNo + ", count=" + count + "]";
     }
 }
