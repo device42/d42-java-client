@@ -1,5 +1,6 @@
 package com.device42.client.parser;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -20,6 +21,17 @@ public class BasicDeviceJsonParser implements JsonObjectParser<Device> {
         device.setManufacturer(json.has("manufacturer") ? json.getString("manufacturer") : "");
         device.setUuid(json.has("uuid") ? json.getString("uuid") : "");
         device.setRack(json.has("rack") ? json.getString("rack") : "");
+        device.setCustomer(json.has("customer")? json.getString("customer") : "");
+        if (json.has("tags")) {
+        	
+        	JSONArray tagsArray = json.getJSONArray("tags");
+        	String[] tags = new String[tagsArray.length()];
+        	for (int i = 0; i < tagsArray.length(); i++) {
+        		tags[i] = tagsArray.getString(i);
+        	}
+        	device.setTags(tags);
+        }
+        
         return device;
     }
 }
