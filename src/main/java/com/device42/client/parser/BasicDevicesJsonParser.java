@@ -8,12 +8,13 @@ import org.codehaus.jettison.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicDevicesJsonParser implements JsonObjectParser<List<Device>> {
+public class BasicDevicesJsonParser extends AbstractJsonObjectListParser<Device> {
     private BasicDeviceJsonParser deviceJsonParser = new BasicDeviceJsonParser();
 
     @Override
     public List<Device> parse(JSONObject json) throws JSONException {
         JSONArray jsonArray = json.getJSONArray("Devices");
+        storeLimits(json);
         List<Device> res = new ArrayList<>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             res.add(deviceJsonParser.parse(jsonArray.getJSONObject(i)));

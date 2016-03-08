@@ -3,7 +3,7 @@ package com.device42.client.services.parameters;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServiceParameters implements InputParameters {
+public class ServiceParameters extends AbstractInputLimitParameters {
     public static class ServiceParametersBuilder {
         private long id;
 
@@ -31,6 +31,7 @@ public class ServiceParameters implements InputParameters {
         if (id > 0) {
             parameters.put("service_id", Long.toString(id));
         }
+        addLimits(parameters);
         return parameters;
     }
 }

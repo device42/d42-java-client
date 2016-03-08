@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.device42.client.util.Device42ClientException;
 
-public class DeviceParameters implements InputParameters {
+public class DeviceParameters extends AbstractInputLimitParameters {
     public static class DeviceParametersBuilder {
         private static final String[] DEFAULT_COLUMNS = {
                 "uuid", "service_level", "rack", "device_id", "name", "asset_no",
@@ -18,8 +18,8 @@ public class DeviceParameters implements InputParameters {
 
         private List<String> columns;
         private Map<String, String> parameters;
-        private long limit;
-        private long offset;
+        private int limit;
+        private int offset;
 
         public DeviceParametersBuilder() {
             this.columns = Arrays.asList(DEFAULT_COLUMNS);
@@ -38,12 +38,12 @@ public class DeviceParameters implements InputParameters {
             return new DeviceParameters(columns, parameters, limit, offset);
         }
 
-        public DeviceParametersBuilder limit(long limit) {
+        public DeviceParametersBuilder limit(int limit) {
             this.limit = limit;
             return this;
         }
 
-        public DeviceParametersBuilder offset(long offset) {
+        public DeviceParametersBuilder offset(int offset) {
             this.offset = offset;
             return this;
         }
@@ -56,18 +56,17 @@ public class DeviceParameters implements InputParameters {
 
     private List<String> columns;
     private Map<String, String> parameters;
-    private long limit;
-    private long offset;
+    
 
     private DeviceParameters(
             List<String> columns,
             Map<String, String> parameters,
-            long limit,
-            long offset) {
+            int limit,
+            int offset) {
         this.columns = columns;
         this.parameters = parameters;
-        this.limit = limit;
-        this.offset = offset;
+        addLimit(limit);
+        addOffset(offset);
     }
 
     @Override
@@ -77,12 +76,7 @@ public class DeviceParameters implements InputParameters {
         for (Map.Entry<String, String> parameterEntry : parameters.entrySet()) {
             parametersMap.put(parameterEntry.getKey(), parameterEntry.getValue());
         }
-        if (limit > 0) {
-            parametersMap.put("limit", Long.toString(limit));
-        }
-        if (offset > 0) {
-            parametersMap.put("offset", Long.toString(offset));
-        }
+        addLimits(parametersMap);
         return parametersMap;
     }
 }

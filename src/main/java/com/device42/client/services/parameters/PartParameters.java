@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class PartParameters implements InputParameters {
+public class PartParameters extends AbstractInputLimitParameters {
     public static class PartParametersBuilder {
         private String type;
         private String device;
@@ -94,6 +94,7 @@ public class PartParameters implements InputParameters {
         if (StringUtils.isNotBlank(deviceSerial)) {
             parameters.put("device_serial", deviceSerial);
         }
+        addLimits(parameters);
         return parameters;
     }
 }

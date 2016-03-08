@@ -3,7 +3,7 @@ package com.device42.client.services.parameters;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RoomParameters implements InputParameters {
+public class RoomParameters extends AbstractInputLimitParameters {
     public static class RoomParametersBuilder {
         private long buildingId;
 
@@ -31,6 +31,7 @@ public class RoomParameters implements InputParameters {
         if (buildingId > 0) {
             parameters.put("building_id", Long.toString(buildingId));
         }
+        addLimits(parameters);
         return parameters;
     }
 }

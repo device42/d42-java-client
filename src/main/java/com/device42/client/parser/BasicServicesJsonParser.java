@@ -8,12 +8,13 @@ import org.codehaus.jettison.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicServicesJsonParser implements JsonObjectParser<List<Service>> {
+public class BasicServicesJsonParser extends AbstractJsonObjectListParser<Service> {
     private final BasicServiceJsonParser serviceJsonParser = new BasicServiceJsonParser();
 
     @Override
     public List<Service> parse(JSONObject json) throws JSONException {
         JSONArray jsonArray = json.getJSONArray("services");
+        storeLimits(json);
         List<Service> res = new ArrayList<Service>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             res.add(serviceJsonParser.parse(jsonArray.getJSONObject(i)));

@@ -2,6 +2,7 @@ package com.device42.client.services;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpHost;
@@ -19,9 +20,10 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.device42.client.parser.BasicErrorJsonParser;
+import com.device42.client.parser.JsonObjectListParser;
 import com.device42.client.parser.JsonObjectParser;
-import com.device42.client.parser.JsonParser;
 import com.device42.client.services.parameters.EmptyInputParameters;
+import com.device42.client.services.parameters.InputLimitParameters;
 import com.device42.client.services.parameters.InputParameters;
 import com.device42.client.util.Device42ClientException;
 
@@ -51,12 +53,12 @@ abstract class AbstractAsynchronousRestClient implements Closeable {
         return clientContext;
     }
 
-    protected <T> T get(String path, JsonParser<?, T> parser) {
+    protected <T> T get(String path, JsonObjectParser<T> parser) {
         return get(path, parser, new EmptyInputParameters());
     }
 
-    @SuppressWarnings("unchecked")
-    protected <T> T get(String path, JsonParser<?, T> parser, InputParameters inputParameters) {
+    
+    protected <T> T get(String path, JsonObjectParser<T> parser, InputParameters inputParameters) {
         RequestBuilder requestBuilder = RequestBuilder.get().setUri(path);
         for (Map.Entry<String, String> entry : inputParameters.parametersMap().entrySet()) {
             requestBuilder.addParameter(entry.getKey(), entry.getValue());
@@ -66,7 +68,7 @@ abstract class AbstractAsynchronousRestClient implements Closeable {
             StatusLine statusLine = httpResponse.getStatusLine();
             if (statusLine.getStatusCode() >= 200 && statusLine.getStatusCode() < 300) {
                 JSONObject jsonObject = new JSONObject(EntityUtils.toString(httpResponse.getEntity()));
-                return (T) ((JsonObjectParser<T>) parser).parse(jsonObject);
+                return parser.parse(jsonObject);
             } else {
                 String errorMessage = "";
                 try {
@@ -86,4 +88,21 @@ abstract class AbstractAsynchronousRestClient implements Closeable {
             throw new Device42ClientException(ex.getMessage());
         }
     }
+    protected <T> List<T> getAll(String path, JsonObjectListParser<T> parser) {
+    	return getAll(path, parser, new EmptyInputParameters());
+    }
+    protected <T> List<T> getAll(String path, JsonObjectListParser<T> parser, InputLimitParameters inputParameters) {
+    	List<T> result = get(path, parser, inputParameters);
+    	if (result != null && parser.getLimit()> 0 && parser.getCount() > 0 && parser.getCount() > result.size()) {
+    		for (int offset = parser.getLimit(); offset < parser.getCount(); offset += parser.getLimit()) {
+    			inputParameters.addLimit(parser.getLimit());
+    			inputParameters.addOffset(offset);
+    			List<T> partialResult = get(path, parser, inputParameters);
+    			result.addAll(partialResult);
+    		}
+    	}
+    	return result;
+    }
+    
+    
 }

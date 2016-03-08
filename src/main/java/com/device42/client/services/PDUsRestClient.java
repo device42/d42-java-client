@@ -11,13 +11,18 @@ import com.device42.client.services.parameters.PDUParameters;
 
 public class PDUsRestClient extends AbstractAsynchronousRestClient {
     private BasicPDUsJsonParser pdusJsonParser = new BasicPDUsJsonParser();
+    private static final String ALL_PDUS_PATH = "/api/1.0/pdus/";
 
     PDUsRestClient(String baseUrl, CloseableHttpClient httpClient) {
         super(baseUrl, httpClient);
     }
 
     public List<PDU> getPDUs() {
-        return get("/api/1.0/pdus/", pdusJsonParser, new PDUParameters.PDUParametersBuilder().build());
+        return get(ALL_PDUS_PATH, pdusJsonParser, new PDUParameters.PDUParametersBuilder().build());
+    }
+    
+    public List<PDU> getAllPDUs() {
+        return getAll(ALL_PDUS_PATH, pdusJsonParser, new PDUParameters.PDUParametersBuilder().build());
     }
 
     public List<PDU> getPDUsById(long id) {

@@ -9,17 +9,23 @@ import java.util.List;
 
 public class RacksRestClient extends AbstractAsynchronousRestClient {
     private BasicRacksJsonParser racksJsonParser = new BasicRacksJsonParser();
+    
+    private static final String ALL_RACKS_PATH = "/api/1.0/racks/";
 
     RacksRestClient(String baseUrl, CloseableHttpClient httpClient) {
         super(baseUrl, httpClient);
     }
 
     public List<Rack> getRacks() {
-        return get("/api/1.0/racks/", racksJsonParser);
+        return get(ALL_RACKS_PATH, racksJsonParser);
+    }
+    
+    public List<Rack> getAllRacks() {
+        return getAll(ALL_RACKS_PATH, racksJsonParser);
     }
 
     public List<Rack> getRacksByRoom(String room) {
-        List<Rack> racks = get("/api/1.0/racks/", racksJsonParser);
+        List<Rack> racks = get(ALL_RACKS_PATH, racksJsonParser);
         Iterator<Rack> iter = racks.iterator();
         while (iter.hasNext()) {
             Rack rack = iter.next();

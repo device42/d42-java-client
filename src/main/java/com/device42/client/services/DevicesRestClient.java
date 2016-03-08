@@ -12,6 +12,7 @@ import com.device42.client.services.parameters.DeviceParameters;
 public class DevicesRestClient extends AbstractAsynchronousRestClient {
     private BasicDeviceJsonParser deviceJsonParser = new BasicDeviceJsonParser();
     private BasicDevicesJsonParser devicesJsonParser = new BasicDevicesJsonParser();
+    private static final String DEVICE_ALL_PATH = "/api/1.0/devices/all/";
 
     DevicesRestClient(String baseUrl, CloseableHttpClient httpClient) {
         super(baseUrl, httpClient);
@@ -26,6 +27,10 @@ public class DevicesRestClient extends AbstractAsynchronousRestClient {
     }
 
     public List<Device> getDevices(DeviceParameters deviceParameters) {
-        return get("/api/1.0/devices/all/", devicesJsonParser, deviceParameters);
+        return get(DEVICE_ALL_PATH, devicesJsonParser, deviceParameters);
+    }
+    
+    public List<Device> getAllDevices(DeviceParameters deviceParameters) {
+    	return getAll(DEVICE_ALL_PATH, devicesJsonParser, deviceParameters);
     }
 }

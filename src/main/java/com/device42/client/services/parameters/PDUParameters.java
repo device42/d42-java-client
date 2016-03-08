@@ -3,7 +3,7 @@ package com.device42.client.services.parameters;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PDUParameters implements InputParameters {
+public class PDUParameters extends AbstractInputLimitParameters {
     public static class PDUParametersBuilder {
         public PDUParametersBuilder() {}
 
@@ -18,6 +18,7 @@ public class PDUParameters implements InputParameters {
     @Override
     public Map<String, String> parametersMap() {
         Map<String, String> parameters = new HashMap<>();
+        addLimits(parameters);
         return parameters;
     }
 }
