@@ -24,12 +24,12 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.TrustStrategy;
-import org.apache.log4j.Logger;
+
 
 import com.device42.client.util.Device42ClientException;
 
 public class Device42ClientFactory {
-    private static Logger logger = Logger.getLogger(Device42ClientFactory.class);
+    
 
     public static BuildingsRestClient createBuildingClient(String baseUrl, String username, String password) {
         return new BuildingsRestClient(baseUrl, createHttpClient(username, password));
@@ -86,14 +86,11 @@ public class Device42ClientFactory {
                 }
             }).build();
         } catch (NoSuchAlgorithmException e) {
-            logger.error("Error creating SSL context", e);
-            throw new Device42ClientException("Error creating SSL context. No such algorithm.");
+            throw new Device42ClientException("Error creating SSL context. No such algorithm.", e);
         } catch (KeyManagementException e) {
-            logger.error("Error creating SSL context", e);
-            throw new Device42ClientException("Error creating SSL context. Key manager exception.");
+            throw new Device42ClientException("Error creating SSL context. Key manager exception.", e);
         } catch (KeyStoreException e) {
-            logger.error("Error creating SSL context", e);
-            throw new Device42ClientException("Error creating SSL context. Keystore exception.");
+            throw new Device42ClientException("Error creating SSL context. Keystore exception.", e);
         }
     }
 }

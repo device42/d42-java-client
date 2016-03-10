@@ -3,7 +3,8 @@ package com.device42.client.services.parameters;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import com.device42.client.util.StringUtil;
+
 
 public class PartParameters extends AbstractInputLimitParameters {
     public static class PartParametersBuilder {
@@ -82,16 +83,16 @@ public class PartParameters extends AbstractInputLimitParameters {
         if (partmodelId > 0) {
             parameters.put("partmodel_id", Long.toString(partmodelId));
         }
-        if (StringUtils.isNotBlank(type)) {
+        if (StringUtil.isNotBlank(type)) {
             parameters.put("type", type);
         }
-        if (StringUtils.isNotBlank(device)) {
+        if (StringUtil.isNotBlank(device)) {
             parameters.put("device", device);
         }
-        if (StringUtils.isNotBlank(room)) {
+        if (StringUtil.isNotBlank(room)) {
             parameters.put("room", room);
         }
-        if (StringUtils.isNotBlank(deviceSerial)) {
+        if (StringUtil.isNotBlank(deviceSerial)) {
             parameters.put("device_serial", deviceSerial);
         }
         addLimits(parameters);

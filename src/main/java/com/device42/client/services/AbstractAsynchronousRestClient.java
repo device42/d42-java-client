@@ -15,7 +15,7 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -28,7 +28,7 @@ import com.device42.client.services.parameters.InputParameters;
 import com.device42.client.util.Device42ClientException;
 
 abstract class AbstractAsynchronousRestClient implements Closeable {
-    private static Logger logger = Logger.getLogger(AbstractAsynchronousRestClient.class);
+    
 
     private final HttpHost targetHost;
     private final CloseableHttpClient httpClient;
@@ -77,15 +77,15 @@ abstract class AbstractAsynchronousRestClient implements Closeable {
                 } catch (JSONException ex) {
                     errorMessage = statusLine.getStatusCode() + ": " + statusLine.getReasonPhrase();
                 }
-                logger.error("Unexpected response status: " + errorMessage);
-                throw new Device42ClientException(errorMessage);
+                
+                throw new Device42ClientException("Unexpected response status: " + errorMessage);
             }
         } catch (IOException ex) {
-            logger.error("Error to call REST API", ex);
-            throw new Device42ClientException(ex.getMessage());
+            
+            throw new Device42ClientException("Error to call REST API " + ex.getMessage(), ex);
         } catch (JSONException ex) {
-            logger.error("JSON error", ex);
-            throw new Device42ClientException(ex.getMessage());
+            
+            throw new Device42ClientException("JSON error " + ex.getMessage(), ex);
         }
     }
     protected <T> List<T> getAll(String path, JsonObjectListParser<T> parser) {

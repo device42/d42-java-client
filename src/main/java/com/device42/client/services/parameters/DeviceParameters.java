@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.device42.client.util.Device42ClientException;
+import com.device42.client.util.StringUtil;
 
 public class DeviceParameters extends AbstractInputLimitParameters {
     public static class DeviceParametersBuilder {
@@ -72,7 +71,7 @@ public class DeviceParameters extends AbstractInputLimitParameters {
     @Override
     public Map<String, String> parametersMap() {
         Map<String, String> parametersMap = new HashMap<>();
-        parametersMap.put("include_cols", StringUtils.join(columns, ","));
+        parametersMap.put("include_cols", StringUtil.stringJoin(",", columns));
         for (Map.Entry<String, String> parameterEntry : parameters.entrySet()) {
             parametersMap.put(parameterEntry.getKey(), parameterEntry.getValue());
         }
