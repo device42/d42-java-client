@@ -3,10 +3,10 @@
   <groupId>com.device42</groupId>
   <artifactId>d42-java-client</artifactId>
   <versioning>
-    <release>1.0.12</release>
+    <release>1.0.13</release>
     <versions>
-      <version>1.0.12</version>
+      <version>1.0.13</version>
     </versions>
-    <lastUpdated>20160310150342</lastUpdated>
+    <lastUpdated>20180707123405</lastUpdated>
   </versioning>
 </metadata>
