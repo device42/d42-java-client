@@ -47,7 +47,7 @@ public class Device42ClientFactory {
         CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
 
-        Header header = new BasicHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+        Header header = new BasicHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
         List<Header> headers = Arrays.asList(header);
 
         return HttpClients.custom()
@@ -76,6 +76,10 @@ public class Device42ClientFactory {
 
     public static ServicesRestClient createServiceClient(String baseUrl, String username, String password) {
         return new ServicesRestClient(baseUrl, createHttpClient(username, password));
+    }
+
+    public static ApplicationComponentsRestClient createApplicationComponentsRestClient(String baseUrl, String username, String password) {
+        return new ApplicationComponentsRestClient(baseUrl, createHttpClient(username, password));
     }
 
     private static SSLContext createSslContext() {
